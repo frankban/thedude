@@ -152,7 +152,7 @@ tap.test('task', t => {
     task.run();
     t.equal(func.called, true);
     t.deepEqual(func.args, [1, 2]);
-    // The status is updated accodingly.
+    // The status is updated accordingly.
     t.equal(task.info().status, dude.DONE);
     t.end();
   });
@@ -322,7 +322,7 @@ tap.test('task', t => {
     // Cancel the task.
     const canceled = task.cancel();
     t.equal(canceled, true);
-    // The status is updated accodingly.
+    // The status is updated accordingly.
     t.equal(task.info().status, dude.CANCELED);
     t.end();
   });
@@ -340,7 +340,7 @@ tap.test('task', t => {
     // The task will not run even when the future value arrives.
     f.set(42);
     t.equal(func.called, false);
-    // The status is updated accodingly.
+    // The status is updated accordingly.
     t.equal(task.info().status, dude.CANCELED);
     t.end();
   });

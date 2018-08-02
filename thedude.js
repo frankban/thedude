@@ -64,8 +64,8 @@ function makeLazy(funcOrInstance, createTask) {
     methods:
       - run(callback): run the task and, if provided, call the callback when
         the execution completes. When the task function last argument is a
-        callback, then the callback provided to "run" is called rigth after the
-        asynchrnous function executes its own callback;
+        callback, then the callback provided to "run" is called right after the
+        asynchronous function executes its own callback;
       - note(notes): add annotations to the task, for instance to make it
         easier to identify specific tasks or to provide metadata. The given
         notes is an object with key/value pairs representing notes.
@@ -303,7 +303,7 @@ class TaskList {
 
   /**
     Return a lazy function or instance from the given function or instance.
-    When the function is executed, the corresponsing task is automatically
+    When the function is executed, the corresponding task is automatically
     added to this task list.
 
     @param {Object or Function} funcOrInstance The original function or
