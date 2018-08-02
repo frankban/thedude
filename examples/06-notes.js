@@ -22,6 +22,6 @@ calc = list.lazy(calc);
 calc.sum(2, 3).note({name: 'sum', args: [2, 3]});
 calc.mul(3, 4).note({name: 'mul', args: [3, 4]});
 calc.mul(10, 100).note({name: 'sum', args: [10, 100]});
-list.asArray();
+list.asArray().map(task => task.info().notes);
 
 list.run();

@@ -38,6 +38,8 @@ The status reflects that the task has been run:
 > task.info();
 { id: 0, status: 'done', notes: {} }
 ```
+Tasks can be in the following statuses:
+*dude.PROCRASTINATING* -> *dude.RUNNING* -> *dude.DONE* or *dude.CANCELED*.
 
 ## Lazy functions
 
@@ -116,4 +118,56 @@ callbacks.
 
 ## Lazy objects
 
-TODO
+The *lazy* decorator is also able to decorate objects. The resulting object's
+methods are lazy, for instance:
+```javascript
+class Calc {
+    sum(a, b) {
+        console.log(`${a} + ${b}`);
+        return a + b;
+    }
+    mul(a, b) {
+        console.log(`${a} * ${b}`);
+        return a * b;
+    }
+}
+let calc = new Calc();
+
+const list = dude.list();
+calc = list.lazy(calc);
+
+calc.sum(2, 3);
+calc.mul(3, 4);
+calc.mul(10, 100);
+```
+The three calls at the end of this example do not actually execute the
+corresponding operations but register the tasks on the list, as seen before.
+To sum it up: lazy objects are objects whose methods are lazy.
+
+## Annotating tasks
+
+When working on many tasks, the task identifier included in *task.info()* could
+not be enough to identify the underlying operation that will be done when the
+task is run. Tasks can be annotated to add metadata info with the *note*
+method, for instance:
+```javascript
+calc.sum(2, 3).note({name: 'sum', args: [2, 3]});
+calc.mul(3, 4).note({name: 'mul', args: [3, 4]});
+calc.mul(10, 100).note({name: 'sum', args: [10, 100]});
+> list.asArray().map(task => task.info().notes);
+[ { name: 'sum', args: [ 2, 3 ] },
+  { name: 'mul', args: [ 3, 4 ] },
+  { name: 'sum', args: [ 10, 100 ] } ]
+```
+What to store in notes is up to the caller. For instance, notes could be used
+to automatically generate a summary of what is going to happen when a task list
+is run.
+
+# Canceling tasks
+
+Tasks can be canceled with the *cancel* method, which returns whether the
+operation succeeded. A task is successfully canceled when its status is
+*dude.PROCRASTINATING*:
+```javascript
+
+```
