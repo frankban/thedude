@@ -5,7 +5,7 @@
 const dude = require('../thedude.js');
 
 class Calc {
-    add(a, b) {
+    sum(a, b) {
         console.log(`${a} + ${b}`);
         return a + b;
     }
@@ -19,7 +19,7 @@ let calc = new Calc();
 const list = dude.list();
 calc = list.lazy(calc);
 
-calc.add(2, 3);
+calc.sum(2, 3);
 const t1 = calc.mul(3, 4);
 const t2 = calc.mul(10, 100);
 

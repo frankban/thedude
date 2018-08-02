@@ -4,7 +4,7 @@
 
 const dude = require('../thedude.js');
 
-function add(a, b) {
+function sum(a, b) {
     console.log(`${a} + ${b}`);
     return a + b;
 };
@@ -14,10 +14,10 @@ function mul(a, b) {
 };
 
 const list = dude.list();
-add = list.lazy(add);
+sum = list.lazy(sum);
 mul = list.lazy(mul);
 
-add(2, 3);
+sum(2, 3);
 mul(3, 4);
 mul(10, 100);
 

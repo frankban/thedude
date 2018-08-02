@@ -4,11 +4,11 @@
 
 const dude = require('../thedude.js');
 
-function add(a, b) {
-    console.log('running add');
+function sum(a, b) {
+    console.log('running sum');
     return a + b;
 };
 
-const lazyAdd = dude.lazy(add);
-const task = lazyAdd(42, 47);
+const lazySum = dude.lazy(sum);
+const task = lazySum(42, 47);
 task.run(console.log);

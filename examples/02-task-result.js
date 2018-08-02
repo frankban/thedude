@@ -4,12 +4,12 @@
 
 const dude = require('../thedude.js');
 
-function add(a, b) {
-    console.log(`adding ${a} and ${b}`);
+function sum(a, b) {
+    console.log(`${a} + ${b}`);
     return a + b;
 };
 
-const task = dude.task(add, 1, 2);
+const task = dude.task(sum, 1, 2);
 
 task.run((err, result) => {
     console.log('err:', err);
