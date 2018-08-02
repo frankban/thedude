@@ -1,0 +1,31 @@
+{
+  "name": "thedude",
+  "version": "0.1.0",
+  "description": "Call and synchronize functions in the future",
+  "main": "dude.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "tap test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankban/dude.git"
+  },
+  "keywords": [
+    "calls",
+    "commit",
+    "future",
+    "later"
+  ],
+  "author": "Francesco Banconi",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/frankban/thedude/issues"
+  },
+  "homepage": "https://github.com/frankban/thedude#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "tap": "^12.0.1"
+  },
+  "dependencies": {}
+}
