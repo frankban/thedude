@@ -280,34 +280,81 @@ that will be available only later.
 
 Create a task representing a call of the given function and arguments.
 
-@param {Function} func The function executed when running the task.
-@param {Array} args The arguments to use when executing the function. An
-argument can have any type as usual. If an argument is provided as a
-future, the the task will wait for the future to be done before executing
-the function. If the last argument is a function, it is a assumed to be a
-callback, and therefore the function is assumed to be asynchronous.
-@returns {Object} An API object to interact with the task, with the following
-methods:
-  - run(callback): run the task and, if provided, call the callback when
+- *@param {Function} func* The function executed when running the task.
+- *@param {Array} args* The arguments to use when executing the function. An
+  argument can have any type as usual. If an argument is provided as a
+  future, the the task will wait for the future to be done before executing
+  the function. If the last argument is a function, it is a assumed to be a
+  callback, and therefore the function is assumed to be asynchronous.
+- *@returns {Object}* An API object to interact with the task, with the
+  following methods:
+  - *run(callback)*: run the task and, if provided, call the callback when
     the execution completes. When the task function last argument is a
     callback, then the callback provided to "run" is called right after the
     asynchronous function executes its own callback;
-  - note(notes): add annotations to the task, for instance to make it
+  - *note(notes)*: add annotations to the task, for instance to make it
     easier to identify specific tasks or to provide metadata. The given
     notes is an object with key/value pairs representing notes.
-  - info(): return information about the task as an object with the
+  - *info()*: return information about the task as an object with the
     following fields:
-    - id: the task identifier;
-    - notes: the notes added using note() (see above);
-    - status: a string representing the task status, between:
-      - dude.PROCRASTINATING: the task function has not been started yet.
+    - *id*: the task identifier;
+    - *notes*: the notes added using note() (see above);
+    - *status*: a string representing the task status, between:
+      - *dude.PROCRASTINATING*: the task function has not been started yet.
         Note that a task could be procrastinating even if run has been
         called, for instance, because it's waiting for all required futures
         to be done;
-      - dude.RUNNING: the task is currently running;
-      - dude.CANCELED: the task has been canceled using cancel, and will
+      - *dude.RUNNING*: the task is currently running;
+      - *dude.CANCELED*: the task has been canceled using cancel, and will
         not be able to be run anymore;
-      - dude.DONE: the task completed, and cannot be run again.
-  - cancel(): try to cancel the execution of the task, and return whether
+      - *dude.DONE*: the task completed, and cannot be run again.
+  - *cancel()*: try to cancel the execution of the task, and return whether
     the process succeeded. Note that canceling a task only succeeds when
     the task is still procrastinating.
+
+#### lazy(funcOrInstance) ⇒ `Function or Object`
+
+Return a lazy function or instance from the given function or instance.
+
+Lazy functions return a task and accept futures as placeholders for values
+that will be available only later.
+
+- *@param {Function or Object} funcOrInstance* The original function or instance
+  to decorate so that it becomes lazy. Being lazy means that the function
+  itself (or all object methods, when an instance is provided) returns a task
+  rather than actually execute its body.
+- *@returns {Function}* The lazy function or instance.
+
+#### list(options) ⇒ `Object`
+
+Create a task list, which groups tasks to be executed together.
+
+- *@param {Object} options* Not used yet.
+- *@returns {Object}* A task list with the following methods:
+  - *add(task)*: add a task to this list;
+  - *lazy(funcOrInstance)*: equivalent to global lazy. When the returned
+    function is executed, the corresponding task is automatically added to the
+    task list;
+  - *asArray()*: return all tasks in the list;
+  - *clear()*: remove all tasks from the list;
+  - *run(changesCallback, doneCallback)*: run all tasks in this list. The given
+    optional *changesCallback* is called every time a task in the list completes
+    its execution. It receives an error (or null), the task result (if any) and
+    the task itself. The *doneCallback* is called when all current tasks
+    complete. It receives a list of objects, one object for every task run, with
+    the "task", "result" and "err" keys.
+
+#### future() ⇒ `Object`
+
+Create and return a future, which represents a value that will be available in
+the future.
+
+- *@returns {Object}* A future with the *done* attribute (reporting whether the)
+  future is done, and the following methods:
+  - *set(value)*: set the result for this future. From this point on, the future
+    is "done" and the done property returns true. An error is raised if a value
+    is set on a future that is already done;
+  - *addCallback(callback)*: register a callback to be called when the future is
+    done, with its result. If the future is already done, the callback is called
+    immediately with the value. Callbacks are executed in the order they are
+    added.

@@ -14,7 +14,10 @@
 /**
   Return a lazy function or instance from the given function or instance.
 
-  @param {Object or Function} funcOrInstance The original function or instance
+  Lazy functions return a task and accept futures as placeholders for values
+  that will be available only later.
+
+  @param {Function or Object} funcOrInstance The original function or instance
     to decorate so that it becomes lazy. Being lazy means that the function
     itself (or all object methods, when an instance is provided) returns a task
     rather than actually execute its body.
@@ -128,8 +131,6 @@ class Task {
       execution completes, receiving an error and what the original function
       returns as a result. When the task function last argument is a callback,
       then the callback here is only called after the function's own callback.
-    @returns {Object} A promise resolved when the original function returns a
-      result, using the same logic as the callback.
   */
   run(callback) {
     if (!callback) {
@@ -338,7 +339,6 @@ class TaskList {
 
   /**
     Run all tasks in this list.
-    Raise an error if run is called again while tasks are already running.
 
     @param {Function} changesCallback An optional callback called every time a
       task in the list completes its execution. It receives an error (or null),
@@ -346,8 +346,6 @@ class TaskList {
     @param {Function} doneCallback An optional callback called when all current
       tasks complete. It receives a list of objects, one object for every task
       run, with the "task", "result" and "err" keys.
-    @returns {Object} A promise resolved when all current tasks complete,
-      using the same logic as the doneCallback.
   */
   run(changesCallback, doneCallback) {
     if (!doneCallback) {
