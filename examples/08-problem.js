@@ -16,7 +16,7 @@ const list = dude.list();
 getRandomNumber = list.lazy(getRandomNumber);
 sum = list.lazy(sum);
 
-// Goal: we want to get a rundom number and then sum 10 to it.
+// Goal: we want to get a random number and then sum 10 to it.
 getRandomNumber(num => {
     console.log('got random number', num);
 });

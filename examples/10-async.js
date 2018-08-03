@@ -16,11 +16,11 @@ const list = dude.list();
 getRandomNumber = list.lazy(getRandomNumber);
 sum = list.lazy(sum);
 
-// Goal: we want to get a rundom number and then sum 10 to it.
-const fNum = dude.future();
+// Goal: we want to get a random number and then sum 10 to it.
+const fNum = dude.future(); // Create a future.
 getRandomNumber(num => {
     console.log('got random number', num);
-    fNum.set(num);
+    fNum.set(num); // Assign a number to the future.
 });
 sum(fNum, 10);
 
