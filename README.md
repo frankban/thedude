@@ -146,9 +146,9 @@ To sum it up: lazy objects are objects whose methods are lazy.
 
 ### Annotating tasks
 
-When working on many tasks, the task identifier included in *task.info()* could
-not be enough to identify the underlying operation that will be done when the
-task is run. Tasks can be annotated to add metadata info with the *note*
+When working with many tasks, the task identifier included in *task.info()*
+could not be enough to identify the underlying operation that will be done when
+the task is run. Tasks can be annotated to add metadata info with the *note*
 method, for instance:
 ```javascript
 calc.sum(2, 3).note({name: 'sum', args: [2, 3]});
@@ -165,8 +165,8 @@ is run.
 
 ### Canceling tasks
 
-Tasks can be canceled with the *cancel* method, which returns whether the
-operation succeeded. A task is successfully canceled when its status is
+Tasks can be canceled with the *task.cancel()* method, which returns whether
+the operation succeeded. A task is successfully canceled when its status is
 *dude.PROCRASTINATING*. From the example above:
 ```javascript
 calc.sum(2, 3);
@@ -194,7 +194,7 @@ in the future.
 
 A future is similar to a promise, but it is much simpler, specific to thedude,
 and more oriented to future values rather than future callback execution
-(theners). The concept behind futures is very simple, the can be instantiated,
+(theners). The concept behind futures is very simple: they can be instantiated,
 callback can be attached to be executed when a future is set a value, and a
 single value can be set once, as in the example below:
 ```javascript
