@@ -13,4 +13,6 @@ f.set(42);
 
 f.addCallback(console.log);
 
+f.done;
+
 f.set(47);

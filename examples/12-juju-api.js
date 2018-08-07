@@ -5,7 +5,7 @@
 // Allow connecting endpoints using self-signed certs.
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-const jujulib = require('../../../js-libjuju/api/client.js');
+const jujulib = require('../../js-libjuju/api/client.js');
 const WebSocket = require('websocket').w3cwebsocket;
 
 const dude = require('../thedude.js');
@@ -13,8 +13,8 @@ const dude = require('../thedude.js');
 
 const url = 'wss://10.139.230.171:17070/model/0cdf79b5-6a29-403c-83c8-60037d61dcd1/api';
 const facades = [
-  require('../../../js-libjuju/api/facades/application-v5.js'),
-  require('../../../js-libjuju/api/facades/client-v1.js')
+  require('../../js-libjuju/api/facades/application-v5.js'),
+  require('../../js-libjuju/api/facades/client-v1.js')
 ];
 const options = {debug: true, facades: facades, wsclass: WebSocket};
 
