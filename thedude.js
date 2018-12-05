@@ -17,7 +17,7 @@
   Lazy functions return a task and accept futures as placeholders for values
   that will be available only later.
 
-  @param {Function or Object} funcOrInstance The original function or instance
+  @param {Function|Object} funcOrObj The original function, object, or instance
     to decorate so that it becomes lazy. Being lazy means that the function
     itself (or all object methods, when an instance is provided) returns a task
     rather than actually execute its body.
@@ -26,29 +26,35 @@
     only available internally.
   @returns {Function} The lazy function or instance.
 */
-function makeLazy(funcOrInstance, createTask) {
+function makeLazy(funcOrObj, createTask) {
   function decorate(func) {
     return function() {
       return createTask(func, ...arguments);
     };
   }
 
-  if (typeof funcOrInstance === 'function') {
+  if (typeof funcOrObj === 'function') {
     // A function was passed, so just return its decorated counterpart.
-    return decorate(funcOrInstance);
+    return decorate(funcOrObj);
   }
-
   // An object was passed, decorate all its methods.
   const instance = {};
-  const proto = Object.getPrototypeOf(funcOrInstance);
+  let proto = null;
+  if (funcOrObj.constructor.name === 'Object') {
+    // If a raw object was provided.
+    proto = funcOrObj;
+  } else {
+    // It's an instance of another constructor.
+    proto = Object.getPrototypeOf(funcOrObj);
+  }
   Object.getOwnPropertyNames(proto).forEach(name => {
-    const prop = funcOrInstance[name];
+    const prop = funcOrObj[name];
     if (name === 'constructor' || typeof prop !== 'function') {
       // Do not modify constructors or properties that are not methods.
       instance[name] = prop;
       return;
     }
-    instance[name] = decorate(prop.bind(funcOrInstance));
+    instance[name] = decorate(prop.bind(funcOrObj));
   });
   return instance;
 }
@@ -307,14 +313,14 @@ class TaskList {
     When the function is executed, the corresponding task is automatically
     added to this task list.
 
-    @param {Object or Function} funcOrInstance The original function or
+    @param {Object or Function} funcOrObj The original function or
       instance to decorate so that it becomes lazy. Being lazy means that the
       function itself (or all object methods, when an instance is provided)
       returns a task rather than actually execute its body.
     @returns {Function} The lazy function or instance.
   */
-  lazy(funcOrInstance) {
-    return makeLazy(funcOrInstance, (func, ...args) => {
+  lazy(funcOrObj) {
+    return makeLazy(funcOrObj, (func, ...args) => {
       const task = createTask(func, ...args);
       this.add(task);
       return task;
@@ -453,8 +459,8 @@ module.exports = {
   future: () => {
     return new Future();
   },
-  lazy: funcOrInstance => {
-    return makeLazy(funcOrInstance, createTask);
+  lazy: funcOrObj => {
+    return makeLazy(funcOrObj, createTask);
   },
   task: createTask,
   list: options => {
