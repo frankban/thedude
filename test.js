@@ -109,11 +109,29 @@ tap.test('lazy', t => {
     t.end();
   });
 
+  t.test('object', t => {
+    // Create a lazy object.
+    let fooCalled = false;
+    const obj = {
+      foo: () => fooCalled = true
+    };
+    const lazyObj = dude.lazy(obj);
+    // Properties are maintained.
+    t.equal(fooCalled, false);
+    // Call the lazy method to get the task.
+    const task = lazyObj.foo();
+    t.equal(fooCalled, false);
+    // Run the task.
+    task.run();
+    t.equal(fooCalled, true);
+    t.end();
+  });
+
   t.test('object instance', t => {
     // Create a lazy instance.
     const obj = new TestClass();
     const lazyObj = dude.lazy(obj);
-    // Property are maintained.
+    // Properties are maintained.
     t.equal(obj.fooCalled, false);
     // Call the lazy method to get the task.
     const task = lazyObj.foo();
