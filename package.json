@@ -2,7 +2,7 @@
   "name": "thedude",
   "version": "0.1.2",
   "description": "Call and synchronize functions in the future",
-  "main": "dude.js",
+  "main": "thedude.js",
   "scripts": {
     "lint": "eslint .",
     "test": "tap test.js"
@@ -18,7 +18,7 @@
     "later"
   ],
   "author": "Francesco Banconi",
-  "license": "SEE LICENSE IN LICENSE.txt",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/frankban/thedude/issues"
   },
