@@ -41,10 +41,10 @@ function makeLazy(funcOrObj, createTask) {
   const instance = {};
   let proto = null;
   if (funcOrObj.constructor.name === 'Object') {
-    // If a raw object was provided.
+    // A raw object was provided.
     proto = funcOrObj;
   } else {
-    // It's an instance of another constructor.
+    // An instance of another constructor was provided.
     proto = Object.getPrototypeOf(funcOrObj);
   }
   Object.getOwnPropertyNames(proto).forEach(name => {
@@ -313,7 +313,7 @@ class TaskList {
     When the function is executed, the corresponding task is automatically
     added to this task list.
 
-    @param {Object or Function} funcOrObj The original function or
+    @param {Object or Function} funcOrObj The original function, raw object or
       instance to decorate so that it becomes lazy. Being lazy means that the
       function itself (or all object methods, when an instance is provided)
       returns a task rather than actually execute its body.
